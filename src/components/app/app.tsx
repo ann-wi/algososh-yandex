@@ -11,6 +11,7 @@ import { StackPage } from "../stack-page/stack-page";
 import "./app.css";
 
 function App() {
+  console.log("hello world");
   return (
     <div className="app">
       <BrowserRouter>
