@@ -3,49 +3,73 @@ import FibonacciPageStyles from "./fibonacci-page.module.css";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
+import { Circle } from "../ui/circle/circle";
+import { delay } from "../../utils/delay";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { useForm } from "../../utils/hooks/useForm";
+
+type TFibValues = {
+  values: {
+    inputValue: number;
+    fibArr: number[];
+    loader: boolean;
+    end: string;
+  };
+  setValues: (arg: any) => void;
+};
 
 export const FibonacciPage: React.FC = () => {
-  const [inputValue, setInputValue] = useState<string>("");
-  const [fibResult, setFibResult] = useState<string[]>([]);
-
-  // make it accept only numbers not bigger than 19
+  const { values, setValues }: TFibValues = useForm({
+    inputValue: null,
+    fibArr: [],
+    loader: false,
+  });
 
   const handleChange = (e: FormEvent<HTMLInputElement>): void => {
-    setInputValue(e.currentTarget.value);
+    setValues({ inputValue: e.currentTarget.value });
   };
 
-  const calcFibonacci = (number: string) => {
-    const toNumber = Number(number);
-    const defArray = ["0", "1"];
+  const calcFibonacci = (value: number) => {
+    //const toNumber = Number(value);
+    const defArray = [0, 1];
 
-    for (let i = 2; i < toNumber; i++) {
-      const res = Number(defArray[i - 1]) + Number(defArray[i - 2]);
-      defArray.push(String(res));
+    for (let i = 2; i < value; i++) {
+      const res = defArray[i - 1] + defArray[i - 2];
+      defArray.push(res);
     }
 
     return defArray;
   };
 
-  const getFibonacci = async () => {
-    let result: string[] = calcFibonacci(inputValue);
+  const getFibonacci = async (value: number) => {
+    let result = calcFibonacci(value);
 
     for (let i = 0; i <= result.length; i++) {
-      // await
-      setFibResult(result.slice(0, i + 1));
+      await delay(SHORT_DELAY_IN_MS);
+      setValues({ fibArr: result.slice(0, i + 1), loader: true });
     }
+    console.log(values.fibArr);
+    setValues({ inputValue: null, loader: false });
   };
+
+  const minimalInputValue = 1;
+  const maxInputValue = 19;
+
+  const limitedInputValues = !(
+    minimalInputValue <= values.inputValue && values.inputValue <= maxInputValue
+  );
 
   const startFibonacci = (
     e: FormEvent<HTMLFormElement> | FormEvent<HTMLButtonElement>
   ): void => {
     e.preventDefault();
-    getFibonacci();
-    console.log(fibResult);
+    getFibonacci(values.inputValue);
+    setValues({ inputValue: null });
   };
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
-      <form className={FibonacciPageStyles.form}>
+      <form className={FibonacciPageStyles.form} onSubmit={startFibonacci}>
         <div className={FibonacciPageStyles.container}>
           <Input
             placeholder={"Введите число"}
@@ -53,14 +77,22 @@ export const FibonacciPage: React.FC = () => {
             maxLength={2}
             type={"num"}
             onChange={handleChange}
-            value={inputValue}
+            value={values.inputValue || ""}
             max={19}
           />
           <Button
             text={"Рассчитать"}
             extraClass={"button-style"}
             onClick={startFibonacci}
+            isLoader={values.loader}
+            disabled={limitedInputValues}
           />
+        </div>
+        <div className={FibonacciPageStyles.circles}>
+          {values.fibArr &&
+            values.fibArr.map((item, i: number) => {
+              <Circle key={i} letter={String(item)} />;
+            })}
         </div>
       </form>
     </SolutionLayout>

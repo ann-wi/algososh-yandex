@@ -4,11 +4,15 @@ import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
 import { Circle } from "../ui/circle/circle";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import { ElementStates } from "../../types/element-states";
+import { delay } from "../../utils/delay";
+import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const StringComponent: React.FC = () => {
   const [inputString, setInputString] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [reversedArr, setReversedArr] = useState<string[]>([]);
+  const [isLoad, setLoad] = useState(false);
 
   const handleChange = (e: FormEvent<HTMLInputElement>): void => {
     setInputString(e.currentTarget.value.trim());
@@ -25,22 +29,33 @@ export const StringComponent: React.FC = () => {
     ];
   };
 
+  const setCircle = (index: number, currentIndex: number, arr: string[]) => {
+    let arrLength = arr.length - 1;
+    if (currentIndex < index || currentIndex > arrLength - index) {
+      return ElementStates.Modified;
+    }
+    if (currentIndex === index || currentIndex === arrLength - index) {
+      return ElementStates.Changing;
+    }
+    return ElementStates.Default;
+  };
+
   const reverseString = async (item: string) => {
-    // delete spaces from a string
+    setLoad(true);
     const modifiedString = item.split("");
 
-    //
     setCurrentIndex(0);
     setReversedArr([...modifiedString]);
 
-    // await delay()
+    await delay(SHORT_DELAY_IN_MS);
     for (let i = 0; i < Math.floor(modifiedString.length / 2); i++) {
       swapString(modifiedString, i, modifiedString.length - 1);
       setCurrentIndex((i: number) => i + 1);
       setReversedArr([...modifiedString]);
-      //await delay
+      await delay(DELAY_IN_MS);
     }
     setCurrentIndex((i: number) => i + 1);
+    setLoad(false);
     return modifiedString;
   };
 
@@ -70,12 +85,22 @@ export const StringComponent: React.FC = () => {
             text="Развернуть"
             onClick={startReversing}
             disabled={!inputString}
+            extraClass={"button-style"}
+            isLoader={isLoad}
           />
         </div>
         <ul className={StringPageStyles.circleList}>
           {reversedArr &&
-            reversedArr?.map((item, index: number) => {
-              console.log(item);
+            reversedArr?.map((item, i: number) => {
+              return (
+                <li className={StringPageStyles.circle} key={i}>
+                  <Circle
+                    letter={item}
+                    index={i}
+                    state={setCircle(currentIndex, i, reversedArr)}
+                  />
+                </li>
+              );
             })}
         </ul>
       </form>

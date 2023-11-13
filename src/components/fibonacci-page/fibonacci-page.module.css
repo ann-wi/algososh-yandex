@@ -5,7 +5,7 @@
   gap: 12px;
 }
 
-.circleList {
+.circles {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
