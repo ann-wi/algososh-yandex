@@ -109,32 +109,35 @@ export const StackPage: FC = () => {
             text={"Удалить"}
             extraClass={"button-style"}
             onClick={() => pop()}
-            disabled={clearedArray === 0}
+            disabled={clearedArray === 0 || !Boolean(values.stackArr)}
             isLoader={values.loaderDel}
           />
           <Button
             text={"Очистить"}
             extraClass={"button-style"}
             onClick={() => clear()}
-            disabled={clearedArray === 0}
+            disabled={clearedArray === 0 || !Boolean(values.stackArr)}
           />
         </div>
       </form>
-      <div className={StackPageStyles.circles}>
-        {values.stackArr?.map((item, i: number) => (
-          <Circle
-            key={i}
-            index={i}
-            letter={item}
-            head={peak() === i ? "top" : ""}
-            state={
-              i === values.currentIndex
-                ? ElementStates.Changing
-                : ElementStates.Default
-            }
-          />
-        ))}
-      </div>
+      <ul className={StackPageStyles.circles}>
+        {values.stackArr?.map((item, i: number) => {
+          return (
+            <li className={`${StackPageStyles.circle}`} key={i}>
+              <Circle
+                index={i}
+                letter={item}
+                head={peak() === i ? "top" : ""}
+                state={
+                  i === values.currentIndex
+                    ? ElementStates.Changing
+                    : ElementStates.Default
+                }
+              />
+            </li>
+          );
+        })}
+      </ul>
     </SolutionLayout>
   );
 };

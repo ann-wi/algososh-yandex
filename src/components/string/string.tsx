@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState, FC } from "react";
 import StringPageStyles from "./string.module.css";
 import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
@@ -8,7 +8,7 @@ import { ElementStates } from "../../types/element-states";
 import { delay } from "../../utils/delay";
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
 
-export const StringComponent: React.FC = () => {
+export const StringComponent: FC = () => {
   const [inputString, setInputString] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [reversedArr, setReversedArr] = useState<string[]>([]);

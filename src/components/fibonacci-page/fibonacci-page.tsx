@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import { FormEvent, FC } from "react";
 import FibonacciPageStyles from "./fibonacci-page.module.css";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -18,7 +18,7 @@ type TFibValues = {
   setValues: (arg: any) => void;
 };
 
-export const FibonacciPage: React.FC = () => {
+export const FibonacciPage: FC = () => {
   const { values, setValues }: TFibValues = useForm({
     inputValue: null,
     fibArr: [],
@@ -30,15 +30,14 @@ export const FibonacciPage: React.FC = () => {
   };
 
   const calcFibonacci = (value: number) => {
-    //const toNumber = Number(value);
-    const defArray = [0, 1];
+    const defaultArray = [0, 1];
 
-    for (let i = 2; i < value; i++) {
-      const res = defArray[i - 1] + defArray[i - 2];
-      defArray.push(res);
+    for (let i = 2; i <= value; i++) {
+      const res = defaultArray[i - 1] + defaultArray[i - 2];
+      defaultArray.push(res);
     }
 
-    return defArray;
+    return defaultArray;
   };
 
   const getFibonacci = async (value: number) => {
@@ -48,8 +47,7 @@ export const FibonacciPage: React.FC = () => {
       await delay(SHORT_DELAY_IN_MS);
       setValues({ fibArr: result.slice(0, i + 1), loader: true });
     }
-    console.log(values.fibArr);
-    setValues({ inputValue: null, loader: false });
+    setValues({ fibArr: result, loader: false });
   };
 
   const minimalInputValue = 1;
@@ -88,12 +86,16 @@ export const FibonacciPage: React.FC = () => {
             disabled={limitedInputValues}
           />
         </div>
-        <div className={FibonacciPageStyles.circles}>
+        <ul className={FibonacciPageStyles.circles}>
           {values.fibArr &&
             values.fibArr.map((item, i: number) => {
-              <Circle key={i} letter={String(item)} />;
+              return (
+                <li className={FibonacciPageStyles.circle} key={i}>
+                  <Circle letter={String(item)} key={i} />
+                </li>
+              );
             })}
-        </div>
+        </ul>
       </form>
     </SolutionLayout>
   );
