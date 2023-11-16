@@ -6,21 +6,21 @@ import { SHORT_DELAY_IN_MS } from "../constants/delays";
 import { TListElement } from "../components/list-page/list-page-types";
 
 export const addItemIndex = async (
-  setOperationStarted: Dispatch<SetStateAction<boolean>>,
+  setStart: Dispatch<SetStateAction<boolean>>,
   setAddIndex: Dispatch<SetStateAction<boolean>>,
   setSmallCircle: Dispatch<SetStateAction<TListElement>>,
   inputState: string,
-  inputIndxState: string,
+  inputIndexState: string,
   list: List<string>,
   setListArr: Dispatch<SetStateAction<TListElement[]>>,
   setInputIndexState: Dispatch<SetStateAction<string>>,
   setInputState: Dispatch<SetStateAction<string>>,
   runAnimation: (num: number, end: number) => void
 ) => {
-  setOperationStarted(true);
+  setStart(true);
   setAddIndex(true);
   let num = 0;
-  const end = Number(inputIndxState);
+  const end = Number(inputIndexState);
   await runAnimation(num, end);
   setSmallCircle({
     item: "",
@@ -30,7 +30,7 @@ export const addItemIndex = async (
   list.setDefaultColor();
   list.pushByIndex(
     { item: inputState, state: ElementStates.Modified },
-    inputIndxState
+    inputIndexState
   );
   list.setTail();
   setListArr([...list.arr]);
@@ -40,13 +40,13 @@ export const addItemIndex = async (
   setInputIndexState("");
   setInputState("");
   setAddIndex(false);
-  setOperationStarted(false);
+  setStart(false);
 };
 
 export const removeItemIndex = async (
   setStart: Dispatch<SetStateAction<boolean>>,
   setRemoveIndex: Dispatch<SetStateAction<boolean>>,
-  setbottomOper: Dispatch<SetStateAction<boolean>>,
+  setbottomOpen: Dispatch<SetStateAction<boolean>>,
   setSmallCircle: Dispatch<SetStateAction<TListElement>>,
   inputIndexState: string,
   list: List<string>,
@@ -57,7 +57,7 @@ export const removeItemIndex = async (
 ) => {
   setStart(true);
   setRemoveIndex(true);
-  setbottomOper((isbottom) => !isbottom);
+  setbottomOpen((isbottom) => !isbottom);
   const end = Number(inputIndexState);
   await runAnim(end);
   list.removeByIndex(inputIndexState);
@@ -70,7 +70,7 @@ export const removeItemIndex = async (
   });
   list.setDefaultColor();
   setListArr([...list.arr]);
-  setbottomOper((isbottom) => !isbottom);
+  setbottomOpen((isbottom) => !isbottom);
   setInputIndexState("");
   setInputState("");
   setRemoveIndex(false);
@@ -116,7 +116,7 @@ export const addToHead = async (
 export const removeFromHead = async (
   setStart: Dispatch<SetStateAction<boolean>>,
   setRemoveHead: Dispatch<SetStateAction<boolean>>,
-  setbottomOper: Dispatch<SetStateAction<boolean>>,
+  setbottomOpen: Dispatch<SetStateAction<boolean>>,
   setSmallCircle: Dispatch<SetStateAction<TListElement>>,
   smallCircle: TListElement,
   list: List<string>,
@@ -126,7 +126,7 @@ export const removeFromHead = async (
 ) => {
   setStart(true);
   setRemoveHead(true);
-  setbottomOper((isbottom) => !isbottom);
+  setbottomOpen((isbottom) => !isbottom);
   setSmallCircle({
     ...smallCircle,
     position: 0,
@@ -143,7 +143,7 @@ export const removeFromHead = async (
   });
   list.setTail();
   setListArr([...list.arr]);
-  setbottomOper((isbottom) => !isbottom);
+  setbottomOpen((isbottom) => !isbottom);
   setRemoveHead(false);
   setStart(false);
 };
@@ -187,7 +187,7 @@ export const addToTail = async (
 export const removeTailItem = async (
   setOperationStarted: Dispatch<SetStateAction<boolean>>,
   setRemoveTail: Dispatch<SetStateAction<boolean>>,
-  setbottomOper: Dispatch<SetStateAction<boolean>>,
+  setbottomOpen: Dispatch<SetStateAction<boolean>>,
   setSmallCircle: Dispatch<SetStateAction<TListElement>>,
   smallCircle: TListElement,
   list: List<string>,
@@ -197,7 +197,7 @@ export const removeTailItem = async (
 ) => {
   setOperationStarted(true);
   setRemoveTail(true);
-  setbottomOper((isbottom) => !isbottom);
+  setbottomOpen((isbottom) => !isbottom);
   setSmallCircle({
     ...smallCircle,
     position: list.arr.length - 1,
@@ -211,7 +211,7 @@ export const removeTailItem = async (
   setListArr([...list.arr]);
   setInputIndxState("");
   setInputState("");
-  setbottomOper((isbottom) => !isbottom);
+  setbottomOpen((isbottom) => !isbottom);
   setRemoveTail(false);
   setOperationStarted(false);
 };

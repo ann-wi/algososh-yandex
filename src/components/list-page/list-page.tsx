@@ -56,7 +56,7 @@ export const ListPage: FC = () => {
   const changeIndexHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputIndexState(e.target.value);
     const num = Number(e.target.value);
-    if (num > list.arr.length) {
+    if (num >= list.arr.length) {
       setDisable(true);
     } else {
       setDisable(false);
@@ -229,7 +229,7 @@ export const ListPage: FC = () => {
           <Button
             extraClass={ListPageStyles.index_add}
             text="Добавить по индексу"
-            disabled={!userIndexValue || !inputValue || isStart}
+            disabled={!userIndexValue || !inputValue || disable || isStart}
             onClick={() => handleClick("addItemIndex")}
             isLoader={isAddIndex}
           />

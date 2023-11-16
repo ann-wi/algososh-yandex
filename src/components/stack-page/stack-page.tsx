@@ -79,7 +79,7 @@ export const StackPage: FC = () => {
   };
 
   const clearedArray = values.stackArr?.reduce(
-    (sum: any, item): any => sum + item,
+    (sum: number, item: string): any => sum + item,
     0
   );
 

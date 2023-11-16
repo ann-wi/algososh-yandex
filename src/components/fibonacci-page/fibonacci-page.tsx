@@ -73,7 +73,7 @@ export const FibonacciPage: FC = () => {
             placeholder={"Введите число"}
             isLimitText={true}
             maxLength={2}
-            type={"num"}
+            type="number"
             onChange={handleChange}
             value={values.inputValue || ""}
             max={19}

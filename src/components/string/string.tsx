@@ -15,6 +15,7 @@ export const StringComponent: FC = () => {
   const [isLoad, setLoad] = useState(false);
 
   const handleChange = (e: FormEvent<HTMLInputElement>): void => {
+    e.preventDefault();
     setInputString(e.currentTarget.value.trim());
   };
 
@@ -69,10 +70,7 @@ export const StringComponent: FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form
-        className={StringPageStyles.form}
-        onSubmit={() => console.log("string sort")}
-      >
+      <form className={StringPageStyles.form} onSubmit={startReversing}>
         <div className={StringPageStyles.container}>
           <Input
             placeholder="Введите текст"
