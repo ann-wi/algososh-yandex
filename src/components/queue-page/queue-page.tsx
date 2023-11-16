@@ -92,7 +92,7 @@ export const QueuePage: FC = () => {
           type="button"
         />
         <Button
-          extraClass={QueuePageStyles.button_type_reset}
+          extraClass={QueuePageStyles.btn_reset}
           text="Очистить"
           disabled={isLoadingAdd || isLoadingDelete || !!userQueue.isEmpty()}
           onClick={() => {
