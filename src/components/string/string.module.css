@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: row;
+  max-width: 512px;
+  gap: 12px;
+}
+.circleList {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  padding-top: 75px;
+}
+
+.circle {
+  list-style-type: none;
+  padding-right: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.img {
+  max-width: 250px;
+}
