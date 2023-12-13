@@ -1,4 +1,5 @@
 import { FormEvent, useState, FC } from "react";
+import { swapString } from "../../utils/String";
 import StringPageStyles from "./string.module.css";
 import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
@@ -17,17 +18,6 @@ export const StringComponent: FC = () => {
   const handleChange = (e: FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
     setInputString(e.currentTarget.value.trim());
-  };
-
-  const swapString = (
-    arr: string[],
-    firstIndex: number,
-    secondIndex: number
-  ): void => {
-    [arr[firstIndex], arr[secondIndex - firstIndex]] = [
-      arr[secondIndex - firstIndex],
-      arr[firstIndex],
-    ];
   };
 
   const setCircle = (index: number, currentIndex: number, arr: string[]) => {
@@ -70,7 +60,11 @@ export const StringComponent: FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={StringPageStyles.form} onSubmit={startReversing}>
+      <form
+        className={StringPageStyles.form}
+        onSubmit={startReversing}
+        data-cy={"form"}
+      >
         <div className={StringPageStyles.container}>
           <Input
             placeholder="Введите текст"
@@ -78,6 +72,7 @@ export const StringComponent: FC = () => {
             onChange={handleChange}
             isLimitText={true}
             maxLength={11}
+            data-cy={"input"}
           />
           <Button
             text="Развернуть"
@@ -85,13 +80,18 @@ export const StringComponent: FC = () => {
             disabled={!inputString}
             extraClass={"button-style"}
             isLoader={isLoad}
+            data-cy={"submit"}
           />
         </div>
         <ul className={StringPageStyles.circleList}>
           {reversedArr &&
             reversedArr?.map((item, i: number) => {
               return (
-                <li className={StringPageStyles.circle} key={i}>
+                <li
+                  className={StringPageStyles.circle}
+                  key={i}
+                  data-cy={"circles"}
+                >
                   <Circle
                     letter={item}
                     index={i}

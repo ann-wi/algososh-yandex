@@ -3570,10 +3570,10 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.11.tgz"
   "version" "3.0.11"
 
-"cypress@^13.6.0":
-  "integrity" "sha512-quIsnFmtj4dBUEJYU4OH0H12bABJpSujvWexC24Ju1gTlKMJbeT6tTO0vh7WNfiBPPjoIXLN+OUqVtiKFs6SGw=="
-  "resolved" "https://registry.npmjs.org/cypress/-/cypress-13.6.0.tgz"
-  "version" "13.6.0"
+"cypress@^13.6.1":
+  "integrity" "sha512-k1Wl5PQcA/4UoTffYKKaxA0FJKwg8yenYNYRzLt11CUR0Kln+h7Udne6mdU1cUIdXBDTVZWtmiUjzqGs7/pEpw=="
+  "resolved" "https://registry.npmjs.org/cypress/-/cypress-13.6.1.tgz"
+  "version" "13.6.1"
   dependencies:
     "@cypress/request" "^3.0.0"
     "@cypress/xvfb" "^1.2.4"
