@@ -1,28 +1,27 @@
 import { Direction } from "../../types/direction";
 import { ElementStates } from "../../types/element-states";
 import { bubbleSorting, selectionSorting } from "../../utils/array-logic";
-
-const oneElementArr = [{ state: ElementStates.Default, item: 1 }];
+const oneElementArr = [{ item: 1, state: ElementStates.Default }];
 
 const testingArr = [
-  { state: ElementStates.Default, item: 1 },
-  { state: ElementStates.Default, item: 3 },
-  { state: ElementStates.Default, item: 2 },
-  { state: ElementStates.Default, item: 4 },
+  { item: 1, state: ElementStates.Default },
+  { item: 3, state: ElementStates.Default },
+  { item: 2, state: ElementStates.Default },
+  { item: 4, state: ElementStates.Default },
 ];
 
 const resultArrAsc = [
-  { state: ElementStates.Default, item: 1 },
-  { state: ElementStates.Default, item: 2 },
-  { state: ElementStates.Default, item: 3 },
-  { state: ElementStates.Default, item: 4 },
+  { item: 1, state: ElementStates.Modified },
+  { item: 2, state: ElementStates.Modified },
+  { item: 3, state: ElementStates.Modified },
+  { item: 4, state: ElementStates.Modified },
 ];
 
 const resultArrDsc = [
-  { value: 4, color: ElementStates.Modified },
-  { value: 3, color: ElementStates.Modified },
-  { value: 2, color: ElementStates.Modified },
-  { value: 1, color: ElementStates.Modified },
+  { item: 4, state: ElementStates.Modified },
+  { item: 3, state: ElementStates.Modified },
+  { item: 2, state: ElementStates.Modified },
+  { item: 1, state: ElementStates.Modified },
 ];
 
 describe("Тестирование сортировок массива", () => {

@@ -1,4 +1,4 @@
-import { delay } from "q";
+import { delay } from "../../utils/delay";
 import { useState, FC, useEffect, ChangeEvent } from "react";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";

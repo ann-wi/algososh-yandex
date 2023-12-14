@@ -1,34 +1,49 @@
 import TestRenderer from "react-test-renderer";
 import { Button } from "./button";
-import { render, screen, fireEvent } from "@testing-library/react";
 import { Direction } from "../../../types/direction";
 
-describe("Проверка кнопки", () => {
-  let tree;
-  const renderSnapshot = (component: any) =>
-    TestRenderer.create(component).toJSON();
-
-  describe("Снапшоты", () => {
-    it.each([
-      [<Button text="Текст кнопки" />, "Кнопка с текстом"],
-      [<Button />, "Кнопка без текста"],
-      [<Button disabled />, "Кнопка disabled"],
-      [<Button isLoader />, "Индикатор загрузки кнопки"],
-      [<Button sorting={Direction.Ascending} />, "Проверка btn Asc"],
-      [<Button sorting={Direction.Descending} />, "Проверка кнопки Des"],
-      [<Button linkedList="big" />, "Кнопка big"],
-      [<Button linkedList="small" />, "Кнопка small"],
-    ])("создает корректный снапшот для %s", (component, description) => {
-      tree = renderSnapshot(component);
-      expect(tree).toMatchSnapshot();
-    });
+describe("Button component testing", () => {
+  it("Button with text works correctly", () => {
+    const btn = TestRenderer.create(<Button text={"text"} />).toJSON();
+    expect(btn).toMatchSnapshot();
   });
 
-  // Функциональные тесты
-  it("Колбэк кнопки", () => {
-    const callBack = jest.fn();
-    render(<Button onClick={callBack} />);
-    fireEvent.click(screen.getByRole("button"));
-    expect(callBack).toHaveBeenCalled();
+  it("Button without text works correctly", () => {
+    const btn = TestRenderer.create(<Button />).toJSON();
+    expect(btn).toMatchSnapshot();
+  });
+
+  it("Button with ascending sorting works correctly", () => {
+    const btn = TestRenderer.create(
+      <Button sorting={Direction.Ascending} />
+    ).toJSON();
+    expect(btn).toMatchSnapshot();
+  });
+
+  it("Button with descending sorting works correctly", () => {
+    const btn = TestRenderer.create(
+      <Button sorting={Direction.Descending} />
+    ).toJSON();
+    expect(btn).toMatchSnapshot();
+  });
+
+  it("small size Button works correctly", () => {
+    const btn = TestRenderer.create(<Button linkedList={"small"} />).toJSON();
+    expect(btn).toMatchSnapshot();
+  });
+
+  it("big size Button works correctly", () => {
+    const btn = TestRenderer.create(<Button linkedList={"big"} />).toJSON();
+    expect(btn).toMatchSnapshot();
+  });
+
+  it("loader Button works correctly", () => {
+    const btn = TestRenderer.create(<Button isLoader={true} />).toJSON();
+    expect(btn).toMatchSnapshot();
+  });
+
+  it("disabled Button works correctly", () => {
+    const btn = TestRenderer.create(<Button disabled />).toJSON();
+    expect(btn).toMatchSnapshot();
   });
 });

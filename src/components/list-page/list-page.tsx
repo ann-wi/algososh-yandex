@@ -187,42 +187,37 @@ export const ListPage: FC = () => {
 
   return (
     <SolutionLayout title="Связный список">
-      <form className={ListPageStyles.inputs} data-cy={"form"}>
+      <form className={ListPageStyles.inputs}>
         <div className={ListPageStyles.buttons}>
           <Input
             maxLength={4}
             isLimitText={true}
             value={inputValue}
             onChange={changeValueHandler}
-            data-cy={"listInput"}
           />
           <Button
             text="Добавить в head"
             onClick={() => handleClick("addToHead")}
             disabled={!inputValue || isStart}
             isLoader={isAddToHead}
-            data-cy={"headSubmitBtn"}
           />
           <Button
             text="Добавить в tail"
             disabled={!inputValue || isStart}
             onClick={() => handleClick("addToTail")}
             isLoader={isAddToTail}
-            data-cy={"tailSubmitBtn"}
           />
           <Button
             text="Удалить из head"
             onClick={() => handleClick("removeFromHead")}
             isLoader={isRemoveFromHead}
             disabled={list.isEmpty() || isStart}
-            data-cy={"headRemoveBtn"}
           />
           <Button
             text="Удалить из tail"
             onClick={() => handleClick("removeFromTail")}
             isLoader={isRemoveFromTail}
             disabled={list.isEmpty() || isStart}
-            data-cy={"tailRemoveBtn"}
           />
           <Input
             maxLength={4}
@@ -230,7 +225,6 @@ export const ListPage: FC = () => {
             value={userIndexValue}
             onChange={changeIndexHandler}
             placeholder="Введите индекс"
-            data-cy={"listIndexInput"}
           />
           <Button
             extraClass={ListPageStyles.index_add}
@@ -238,7 +232,6 @@ export const ListPage: FC = () => {
             disabled={!userIndexValue || !inputValue || disable || isStart}
             onClick={() => handleClick("addItemIndex")}
             isLoader={isAddIndex}
-            data-cy={"indexAddBtn"}
           />
           <Button
             extraClass={ListPageStyles.index_remove}
@@ -252,7 +245,6 @@ export const ListPage: FC = () => {
             }
             onClick={() => handleClick("removeItemIndex")}
             isLoader={isRemoveIndex}
-            data-cy={"indexRemoveBtn"}
           />
         </div>
       </form>

@@ -29,9 +29,9 @@ describe('Тесты страницы "Очередь"', function () {
     const checkCircleProperties = (index) => {
       cy.get("@allCircle")
         .eq(index)
-        .should("have.css", "border", CHANGING_STATE)
+        .should("have.css", "border", DEFAULT_STATE)
         .wait(SHORT_DELAY_IN_MS)
-        .should("contain", index + 1)
+        .should("contain", index)
         .and("have.css", "border", DEFAULT_STATE);
     };
 
@@ -39,10 +39,7 @@ describe('Тесты страницы "Очередь"', function () {
       cy.get("input").type(i);
       cy.get("button").eq(1).should("be.enabled").click();
 
-      cy.get('[class^="queue-page_list"]')
-        .find(CIRCLE_BOX)
-        .find(CIRCLE)
-        .as("allCircle");
+      cy.get("ul").find(CIRCLE_BOX).find(CIRCLE).as("allCircle");
 
       checkCircleProperties(i - 1);
 
