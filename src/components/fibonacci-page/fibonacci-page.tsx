@@ -84,6 +84,7 @@ export const FibonacciPage: FC = () => {
             onClick={startFibonacci}
             isLoader={values.loader}
             disabled={limitedInputValues}
+            id="fibBtn"
           />
         </div>
         <ul className={FibonacciPageStyles.circles}>

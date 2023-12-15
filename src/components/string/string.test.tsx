@@ -1,7 +1,7 @@
 import { testingStringReverse } from "../../utils/String";
 
-describe("String component testing", () => {
-  it("reversing a string with an even number of items", () => {
+describe("Testing String Reverse page", () => {
+  it("Even number of items reversed correctly", () => {
     expect(testingStringReverse("012345")).toEqual([
       "5",
       "4",
@@ -12,15 +12,15 @@ describe("String component testing", () => {
     ]);
   });
 
-  it("reversing a string with an odd number of items", () => {
+  it("Odd number of items reversed correctly", () => {
     expect(testingStringReverse("01234")).toEqual(["4", "3", "2", "1", "0"]);
   });
 
-  it("reversing a string with an one item", () => {
+  it("One item reversed correctly", () => {
     expect(testingStringReverse("0")).toEqual(["0"]);
   });
 
-  it("empty line reversal", () => {
+  it("Empty item reversed correctly", () => {
     expect(testingStringReverse("")).toEqual([]);
   });
 });

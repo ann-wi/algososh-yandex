@@ -194,30 +194,35 @@ export const ListPage: FC = () => {
             isLimitText={true}
             value={inputValue}
             onChange={changeValueHandler}
+            id="textInput"
           />
           <Button
             text="Добавить в head"
             onClick={() => handleClick("addToHead")}
             disabled={!inputValue || isStart}
             isLoader={isAddToHead}
+            id="headAddBtn"
           />
           <Button
             text="Добавить в tail"
             disabled={!inputValue || isStart}
             onClick={() => handleClick("addToTail")}
             isLoader={isAddToTail}
+            id="tailAddBtn"
           />
           <Button
             text="Удалить из head"
             onClick={() => handleClick("removeFromHead")}
             isLoader={isRemoveFromHead}
             disabled={list.isEmpty() || isStart}
+            id="headDelBtn"
           />
           <Button
             text="Удалить из tail"
             onClick={() => handleClick("removeFromTail")}
             isLoader={isRemoveFromTail}
             disabled={list.isEmpty() || isStart}
+            id="tailDelBtn"
           />
           <Input
             maxLength={4}
@@ -225,6 +230,7 @@ export const ListPage: FC = () => {
             value={userIndexValue}
             onChange={changeIndexHandler}
             placeholder="Введите индекс"
+            id="indexInput"
           />
           <Button
             extraClass={ListPageStyles.index_add}
@@ -232,6 +238,7 @@ export const ListPage: FC = () => {
             disabled={!userIndexValue || !inputValue || disable || isStart}
             onClick={() => handleClick("addItemIndex")}
             isLoader={isAddIndex}
+            id="indexAddBtn"
           />
           <Button
             extraClass={ListPageStyles.index_remove}
@@ -245,6 +252,7 @@ export const ListPage: FC = () => {
             }
             onClick={() => handleClick("removeItemIndex")}
             isLoader={isRemoveIndex}
+            id="indexDelBtn"
           />
         </div>
       </form>
@@ -264,11 +272,13 @@ export const ListPage: FC = () => {
               letter={item.item}
               state={item.state}
               index={i}
-              tail={
-                i === list.getTail() && i !== roundTip.position ? "tail" : ""
-              }
               head={
                 i === list.getHead() && i !== roundTip.position ? "head" : ""
+              }
+              tail={
+                i === listArray.length - 1 && i !== roundTip.position
+                  ? "tail"
+                  : ""
               }
             />
             {i < listArray.length - 1 && (

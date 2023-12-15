@@ -1,6 +1,7 @@
 import { Direction } from "../../types/direction";
 import { ElementStates } from "../../types/element-states";
 import { bubbleSorting, selectionSorting } from "../../utils/array-logic";
+
 const oneElementArr = [{ item: 1, state: ElementStates.Default }];
 
 const testingArr = [
@@ -24,7 +25,7 @@ const resultArrDsc = [
   { item: 1, state: ElementStates.Modified },
 ];
 
-describe("Тестирование сортировок массива", () => {
+describe("Testing sorting page", () => {
   let setSortArrayMock: jest.Mock;
   let setLoadMock: jest.Mock;
   let setLoadTypeMock: jest.Mock;
@@ -35,7 +36,7 @@ describe("Тестирование сортировок массива", () => {
     setLoadTypeMock = jest.fn();
   });
 
-  it("Пустой массив выбором на возрастание", async () => {
+  it("Empty ascending array", async () => {
     await selectionSorting(
       Direction.Ascending,
       [],
@@ -46,7 +47,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Пустой массив выбором на убывание", async () => {
+  it("Empty descending array", async () => {
     await selectionSorting(
       Direction.Descending,
       [],
@@ -57,7 +58,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Пустой массив пузырьком на возрастание", async () => {
+  it("Empty ascending array bubble sort", async () => {
     await bubbleSorting(
       Direction.Ascending,
       [],
@@ -68,7 +69,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Пустой массив пузырьком на убывание", async () => {
+  it("Empty descending array bubble sort", async () => {
     await bubbleSorting(
       Direction.Descending,
       [],
@@ -79,7 +80,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Сортировка выбором на возрастание с одним эл-том", async () => {
+  it("One element ascending array selection sort", async () => {
     await selectionSorting(
       Direction.Ascending,
       oneElementArr,
@@ -90,7 +91,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Сортировка выбором на убывание с одним эл-том", async () => {
+  it("One element descending array selection sort", async () => {
     await selectionSorting(
       Direction.Descending,
       oneElementArr,
@@ -101,7 +102,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Сортировка пузырьком на убывание с одним эл-том", async () => {
+  it("One element ascending array bubble sort", async () => {
     await bubbleSorting(
       Direction.Ascending,
       oneElementArr,
@@ -112,7 +113,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Сортировка пузырьком на возрастание с одним эл-том", async () => {
+  it("One element descending array bubble sort", async () => {
     await bubbleSorting(
       Direction.Descending,
       oneElementArr,
@@ -123,7 +124,7 @@ describe("Тестирование сортировок массива", () => {
     expect(setSortArrayMock).toHaveBeenCalledTimes(0);
   });
 
-  it("Сортировка выбором на возрастание базовая", async () => {
+  it("Ascending array selection sort", async () => {
     await selectionSorting(
       Direction.Ascending,
       testingArr,
@@ -135,7 +136,7 @@ describe("Тестирование сортировок массива", () => {
     expect(sortedArr).toStrictEqual(resultArrAsc);
   });
 
-  it("Сортировка выбором на убывание базовая", async () => {
+  it("Descending array selection sort", async () => {
     await selectionSorting(
       Direction.Descending,
       testingArr,
@@ -147,7 +148,7 @@ describe("Тестирование сортировок массива", () => {
     expect(sortedArr).toStrictEqual(resultArrDsc);
   });
 
-  it("Сортировка пузырьком на возрастание базовая", async () => {
+  it("Ascending array bubble sort", async () => {
     await bubbleSorting(
       Direction.Ascending,
       testingArr,
@@ -159,7 +160,7 @@ describe("Тестирование сортировок массива", () => {
     expect(sortedArr).toStrictEqual(resultArrAsc);
   });
 
-  it("Сортировка пузырьком на убывание базовая", async () => {
+  it("Descending array bubble sort", async () => {
     await bubbleSorting(
       Direction.Descending,
       testingArr,

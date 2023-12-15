@@ -27,22 +27,22 @@ describe("Button component testing", () => {
     expect(btn).toMatchSnapshot();
   });
 
-  it("small size Button works correctly", () => {
+  it("Small Button works correctly", () => {
     const btn = TestRenderer.create(<Button linkedList={"small"} />).toJSON();
     expect(btn).toMatchSnapshot();
   });
 
-  it("big size Button works correctly", () => {
+  it("Big Button works correctly", () => {
     const btn = TestRenderer.create(<Button linkedList={"big"} />).toJSON();
     expect(btn).toMatchSnapshot();
   });
 
-  it("loader Button works correctly", () => {
+  it("Loader Button works correctly", () => {
     const btn = TestRenderer.create(<Button isLoader={true} />).toJSON();
     expect(btn).toMatchSnapshot();
   });
 
-  it("disabled Button works correctly", () => {
+  it("Disabled Button works correctly", () => {
     const btn = TestRenderer.create(<Button disabled />).toJSON();
     expect(btn).toMatchSnapshot();
   });

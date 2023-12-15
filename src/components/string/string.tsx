@@ -60,11 +60,7 @@ export const StringComponent: FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form
-        className={StringPageStyles.form}
-        onSubmit={startReversing}
-        data-cy={"form"}
-      >
+      <form className={StringPageStyles.form} onSubmit={startReversing}>
         <div className={StringPageStyles.container}>
           <Input
             placeholder="Введите текст"
@@ -72,7 +68,6 @@ export const StringComponent: FC = () => {
             onChange={handleChange}
             isLimitText={true}
             maxLength={11}
-            data-cy={"input"}
           />
           <Button
             text="Развернуть"
@@ -80,18 +75,14 @@ export const StringComponent: FC = () => {
             disabled={!inputString}
             extraClass={"button-style"}
             isLoader={isLoad}
-            data-cy={"submit"}
+            id="reverseBtn"
           />
         </div>
         <ul className={StringPageStyles.circleList}>
           {reversedArr &&
             reversedArr?.map((item, i: number) => {
               return (
-                <li
-                  className={StringPageStyles.circle}
-                  key={i}
-                  data-cy={"circles"}
-                >
+                <li className={StringPageStyles.circle} key={i}>
                   <Circle
                     letter={item}
                     index={i}

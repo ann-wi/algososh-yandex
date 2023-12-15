@@ -1,29 +1,23 @@
 export const BASE_URL = "http://localhost:3000";
 
 export const CIRCLE = "[class^=circle_circle__]";
-export const CIRCLE_BOX = "[class^=circle_content__]";
-
-export const DEFAULT_STATE = "4px solid rgb(0, 50, 255)";
-export const CHANGING_STATE = "4px solid rgb(210, 82, 225)";
-
-export const BUTTON = "button[type='button']";
-export const SUBMIT_BUTTON = "button[type='submit']";
-export const RESET_BUTTON = "button[type='reset']";
-
-export const CY_INPUT = '[data-cy="input"]';
-export const CY_SUBMIT_BTN = '[data-cy="submit"]';
-export const CY_FORM = '[data-cy="form"]';
+export const CIRCLE_CONTENT = "[class^=circle_content__]";
 export const CIRCLES = 'div[class^="circle_circle"]';
-export const CY_CLEAR_BTN = '[data-cy="clear"]';
-export const CY_REMOVE_BTN = '[data-cy="remove"]';
-export const CY_CIRCLE_HEAD = 'div[class*="circle_head"]';
-export const CY_CIRCLE_TAIL = 'div[class*="circle_tail"]';
 
-export const CY_LIST_INPUT = '[data-cy="listInput"]';
-export const CY_LIST_INDEX_INPUT = '[data-cy="listIndexInput"]';
-export const CY_HEAD_ADD_BTN = '[data-cy="headSubmitBtn"]';
-export const CY_TAIL_ADD_BTN = '[data-cy="tailSubmitBtn"]';
-export const CY_HEAD_REMOVE_BTN = '[data-cy="headRemoveBtn"]';
-export const CY_TAIL_REMOVE_BTN = '[data-cy="tailRemoveBtn"]';
-export const CY_INDEX_ADD_BTN = '[data-cy="indexAddBtn"]';
-export const CY_INDEX_REMOVE_BTN = '[data-cy="indexRemoveBtn"]';
+export const CY_FORM = "form";
+export const CY_INPUT = "input";
+export const CY_TEXT_INPUT = "input[id='textInput']";
+export const CY_INDEX_INPUT = "input[id='indexInput']";
+
+export const CY_ADD_BTN = "button[id='addBtn']";
+export const CY_RESET_BTN = "button[id='resetBtn']";
+export const CY_REMOVE_BTN = "button[id='removeBtn']";
+export const CY_REVERSE_BTN = "button[id='reverseBtn']";
+export const CY_FIBONACCI_BTN = "button[id='fibBtn']";
+
+export const CY_ADD_HEAD_BTN = "button[id='headAddBtn']";
+export const CY_ADD_TAIL_BTN = "button[id='tailAddBtn']";
+export const CY_DEL_HEAD_BTN = "button[id='headDelBtn']";
+export const CY_DEL_TAIL_BTN = "button[id='tailDelBtn']";
+export const CY_ADD_IDX_BTN = "button[id='indexAddBtn']";
+export const CY_DEL_IDX_BTN = "button[id='indexDelBtn']";

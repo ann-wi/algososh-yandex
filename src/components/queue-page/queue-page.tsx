@@ -75,15 +75,16 @@ export const QueuePage: FC = () => {
         />
         <Button
           text="Добавить"
+          id="addBtn"
           isLoader={isLoadingAdd}
           disabled={isLoadingDelete || !inputValue || userQueue.isFull()}
           onClick={() => {
             handleAction("add");
           }}
-          type="submit"
         />
         <Button
           text="Удалить"
+          id="removeBtn"
           isLoader={isLoadingDelete}
           disabled={isLoadingAdd || !!userQueue.isEmpty()}
           onClick={() => {
@@ -99,6 +100,7 @@ export const QueuePage: FC = () => {
             handleAction("reset");
           }}
           type="reset"
+          id="resetBtn"
         />
       </form>
       <ul className={QueuePageStyles.circles}>

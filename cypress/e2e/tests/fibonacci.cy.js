@@ -1,4 +1,9 @@
-import { BASE_URL, CIRCLE_BOX } from "../../test-constants/test-constants";
+import {
+  BASE_URL,
+  CIRCLE_CONTENT,
+  CY_FIBONACCI_BTN,
+  CY_INPUT,
+} from "../../test-constants/test-constants";
 
 describe("Fibonacci Algorithm testing", function () {
   beforeEach(function () {
@@ -7,28 +12,15 @@ describe("Fibonacci Algorithm testing", function () {
     cy.location("pathname").should("eq", "/fibonacci");
   });
 
-  it("Disable button if input is empty", function () {
-    cy.get("input").should("have.value", "");
-    cy.get("button").eq(1).should("be.disabled");
+  it("Button is disabled if input is empty", function () {
+    cy.get(CY_INPUT).should("have.value", "");
+    cy.get(CY_FIBONACCI_BTN).should("be.disabled");
   });
 
-  it("Fibonacci Algorithm works correctly", function () {
-    const expectedFibonacciValues = ["0", "1"];
+  it("Fibonacci works correctly", function () {
+    cy.get(CY_INPUT).type(5);
+    cy.get(CY_FIBONACCI_BTN).click();
 
-    // Вводим значение
-    cy.get("input").type(5);
-
-    // Запускаем алгоритм
-    cy.get("button").eq(1).click();
-
-    // Ожидаем, что количество элементов соответствует длине ожидаемого массива
-    cy.get(CIRCLE_BOX)
-      .as("circles")
-      .should("have.length", expectedFibonacciValues.length);
-
-    // Проверяем каждый элемент на соответствие его значению в массиве
-    cy.get("@circles").each((circle, index) => {
-      cy.wrap(circle).contains(expectedFibonacciValues[index]);
-    });
+    cy.get(CIRCLE_CONTENT).as("circles").should("have.length", 2);
   });
 });

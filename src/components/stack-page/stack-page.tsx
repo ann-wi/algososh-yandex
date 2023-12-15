@@ -104,6 +104,7 @@ export const StackPage: FC = () => {
             onClick={() => push(values.inputValue)}
             disabled={!Boolean(values.inputValue)}
             isLoader={values.loaderAdd}
+            id="addBtn"
           />
           <Button
             text={"Удалить"}
@@ -111,12 +112,14 @@ export const StackPage: FC = () => {
             onClick={() => pop()}
             disabled={clearedArray === 0 || !Boolean(values.stackArr)}
             isLoader={values.loaderDel}
+            id="removeBtn"
           />
           <Button
             text={"Очистить"}
             extraClass={"button-style"}
             onClick={() => clear()}
             disabled={clearedArray === 0 || !Boolean(values.stackArr)}
+            id="resetBtn"
           />
         </div>
       </form>

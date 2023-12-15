@@ -9,30 +9,30 @@ const renderAndMatchSnapshot = (component: any) => {
 
 describe("Проверка Circle", () => {
   const testCases = [
-    { desc: "Circle без буквы", props: {} },
-    { desc: "Circle с буквами", props: { letter: "Букв" } },
-    { desc: "Circle с head", props: { head: "777" } },
+    { desc: "Circle empty", props: {} },
+    { desc: "Circle with content", props: { letter: "Букв" } },
+    { desc: "Circle with head", props: { head: "777" } },
     {
-      desc: "Circle с react элементом в head",
+      desc: "Circle small head",
       props: { head: <Circle isSmall={true} /> },
     },
-    { desc: "Circle с tail", props: { tail: "777" } },
+    { desc: "Circle with tail", props: { tail: "777" } },
     {
-      desc: "Circle с react элементом в tail",
+      desc: "Circle small tail",
       props: { tail: <Circle isSmall={true} /> },
     },
-    { desc: "Circle с index", props: { index: 777 } },
-    { desc: "Circle с пропсом isSmall ===  true", props: { isSmall: true } },
+    { desc: "Circle with index", props: { index: 777 } },
+    { desc: "Circle small === true", props: { isSmall: true } },
     {
-      desc: "Circle в состоянии default",
+      desc: "Circle with default state",
       props: { state: ElementStates.Default },
     },
     {
-      desc: "Circle в состоянии changing",
+      desc: "Circle with changing state",
       props: { state: ElementStates.Changing },
     },
     {
-      desc: "Circle в состоянии modified",
+      desc: "Circle with modified state",
       props: { state: ElementStates.Modified },
     },
   ];

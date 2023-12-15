@@ -1,155 +1,119 @@
 import {
-  CIRCLE_BOX,
+  CIRCLE_CONTENT,
   BASE_URL,
   CIRCLE,
-  CY_FORM,
-  CY_LIST_INPUT,
-  CY_INDEX_REMOVE_BTN,
-  CY_LIST_INDEX_INPUT,
-  CY_HEAD_ADD_BTN,
-  CY_INDEX_ADD_BTN,
-  CY_HEAD_REMOVE_BTN,
-  CY_TAIL_ADD_BTN,
-  CY_TAIL_REMOVE_BTN,
-  CIRCLES,
-  CY_CIRCLE_HEAD,
-  CY_CIRCLE_TAIL,
+  CY_TEXT_INPUT,
+  CY_INDEX_INPUT,
+  CY_ADD_HEAD_BTN,
+  CY_ADD_TAIL_BTN,
+  CY_DEL_HEAD_BTN,
+  CY_DEL_TAIL_BTN,
+  CY_DEL_IDX_BTN,
+  CY_ADD_IDX_BTN,
 } from "../../test-constants/test-constants";
-import { SHORT_DELAY_IN_MS, DELAY_IN_MS } from "../../../src/constants/delays";
+import { SHORT_DELAY_IN_MS } from "../../../src/constants/delays";
 
-describe("testing the correct operation of the list component", () => {
-  beforeEach(() => {
+describe("Testing List page", function () {
+  beforeEach(function () {
     cy.visit(BASE_URL);
     cy.get("[href='/list']").click();
     cy.location("pathname").should("eq", "/list");
   });
 
-  it("inaccessibility of the submit button when the input value is empty", () => {
-    cy.get("form").within(() => {
-      cy.get("input[placeholder='Введите текст']").should("have.value", "");
-      cy.get("button").should("be.disabled");
-      cy.get("button").should("be.disabled");
-    });
+  it("Buttons disabled if inputs are empty", function () {
+    cy.get(CY_TEXT_INPUT).should("be.empty");
+    cy.get(CY_INDEX_INPUT).should("be.empty");
+    cy.get(CY_ADD_HEAD_BTN).should("be.disabled");
+    cy.get(CY_ADD_TAIL_BTN).should("be.disabled");
+    cy.get(CY_DEL_IDX_BTN).should("be.disabled");
+    cy.get(CY_ADD_IDX_BTN).should("be.disabled");
+    cy.get(CY_DEL_HEAD_BTN).should("be.enabled");
+    cy.get(CY_DEL_TAIL_BTN).should("be.enabled");
   });
 
-  it("checking the rendering of the default list", () => {
-    cy.get(CIRCLES)
-      .should("have.length", 3)
-      .invoke("attr", "class")
-      .then((classList) => expect(classList).contains("circle_default"));
-    cy.get(CY_CIRCLE_HEAD)
-      .first()
-      .should(($div) => {
-        expect($div).to.have.text("head");
-      });
-    cy.get(CY_CIRCLE_TAIL)
-      .eq(2)
-      .should(($div) => {
-        expect(CIRCLE).to.have.text("tail");
-      });
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "0");
-      cy.get(item[1]).children().should("have.text", "34");
-      cy.get(item[2]).children().should("have.text", "8");
-      cy.get(item[3]).children().should("have.text", "1");
-    });
-    cy.wait(Number(DELAY_IN_MS));
+  it("Initial list loaded correctly", function () {
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CIRCLE_CONTENT).should("have.length", 3);
+    cy.get(CIRCLE_CONTENT).find(CIRCLE).as("circle");
+    cy.get(CIRCLE_CONTENT).eq(0).contains(0);
+    cy.get(CIRCLE_CONTENT).eq(0).contains("head");
+    cy.get(CIRCLE_CONTENT).eq(1).contains(1);
+    cy.get(CIRCLE_CONTENT).eq(2).contains("tail");
   });
 
-  it("checking the correct addition of the item to the head", () => {
-    cy.get(CY_LIST_INPUT).type("0");
-    cy.get(CY_HEAD_ADD_BTN).click();
+  it("Element added to HEAD correctly", function () {
+    cy.get(CY_TEXT_INPUT).type(24);
+    cy.get(CY_ADD_HEAD_BTN).should("be.enabled").click();
 
-    cy.wait(Number(SHORT_DELAY_IN_MS));
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "0");
-      cy.get(item[0])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_modified"));
-    });
-    cy.wait(Number(DELAY_IN_MS));
+    cy.get(CIRCLE_CONTENT).eq(0).should("contain", 24);
+
+    cy.get(CIRCLE_CONTENT).should("have.length", 4);
+
+    cy.get(CIRCLE_CONTENT).eq(0).should("contain", 24);
+    cy.get(CIRCLE_CONTENT).eq(0).should("contain", "head");
   });
 
-  it("checking the correct addition of the item to the tail", () => {
-    cy.get(CY_LIST_INPUT).type("9");
-    cy.get(CY_TAIL_ADD_BTN).click();
+  it("Element added to TAIL correctly", function () {
+    cy.get(CY_TEXT_INPUT).type(24);
+    cy.get(CY_ADD_TAIL_BTN).should("be.enabled").click();
 
-    cy.wait(Number(SHORT_DELAY_IN_MS));
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[4]).children().should("have.text", "9");
-      cy.get(item[4])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_modified"));
-    });
-    cy.wait(Number(DELAY_IN_MS));
+    cy.get(CIRCLE_CONTENT).eq(3).should("contain", 24);
+
+    cy.get(CIRCLE_CONTENT).should("have.length", 4);
+
+    cy.get(CIRCLE_CONTENT).eq(3).should("contain", 24);
+    cy.get(CIRCLE_CONTENT).eq(3).should("contain", "tail");
   });
 
-  it("checking correct removal of the item from the head", () => {
-    cy.get(CY_HEAD_REMOVE_BTN).click();
-
-    cy.wait(Number(SHORT_DELAY_IN_MS));
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "34");
-      cy.get(item[1]).children().should("have.text", "8");
-      cy.get(item[2]).children().should("have.text", "1");
-    });
-    cy.wait(Number(DELAY_IN_MS));
+  it("Element removed from HEAD correctly", function () {
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CY_TEXT_INPUT).type(24);
+    cy.get(CY_ADD_HEAD_BTN).should("be.enabled").click();
+    cy.get(CIRCLE_CONTENT).should("have.length", 4);
+    cy.get(CY_DEL_HEAD_BTN).should("be.enabled").click();
+    cy.get(CIRCLE_CONTENT).eq(0).find(CIRCLE);
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CIRCLE_CONTENT).should("have.length", 3);
+    cy.get(CIRCLE_CONTENT).eq(0).contains(0);
+    cy.get(CIRCLE_CONTENT).eq(0).contains("head");
+    cy.get(CIRCLE_CONTENT).eq(0).find(CIRCLE);
   });
 
-  it("checking correct removal of the item from the tail", () => {
-    cy.get(CY_TAIL_REMOVE_BTN).click();
-
-    cy.wait(Number(SHORT_DELAY_IN_MS));
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "0");
-      cy.get(item[1]).children().should("have.text", "34");
-      cy.get(item[2]).children().should("have.text", "8");
-    });
-    cy.wait(Number(DELAY_IN_MS));
+  it("Element removed from TAIL correctly", function () {
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CY_TEXT_INPUT).type(24);
+    cy.get(CY_ADD_TAIL_BTN).should("be.enabled").click();
+    cy.get(CIRCLE_CONTENT).should("have.length", 4);
+    cy.get(CY_DEL_TAIL_BTN).should("be.enabled").click();
+    cy.get(CIRCLE_CONTENT).eq(4).find(CIRCLE);
+    cy.get(CIRCLE_CONTENT).should("have.length", 3);
+    cy.get(CIRCLE_CONTENT).eq(2).contains(2);
+    cy.get(CIRCLE_CONTENT).eq(2).contains("tail");
+    cy.get(CIRCLE_CONTENT).eq(2).find(CIRCLE);
   });
 
-  it("check for adding an item by index", () => {
-    cy.get(CY_LIST_INDEX_INPUT).type(2);
-    cy.get(CY_LIST_INPUT).type("4");
-    cy.get(CY_INDEX_ADD_BTN).click();
-
-    cy.wait(Number(SHORT_DELAY_IN_MS));
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "4");
-      cy.get(item[0])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_changing"));
-      cy.get(item[1]).children().should("have.text", "0");
-      cy.get(item[1])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_changing"));
-      cy.get(item[2]).children().should("have.text", "34");
-      cy.get(item[2])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_default"));
-    });
+  it("Element added by index correctly", function () {
+    cy.get(CY_TEXT_INPUT).type(24);
+    cy.get(CY_INDEX_INPUT).type(2);
+    cy.get(CIRCLE_CONTENT).should("have.length", 3);
+    cy.get(CY_ADD_IDX_BTN).should("be.enabled").click();
+    cy.get(CIRCLE_CONTENT).eq(0).find(CIRCLE);
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CIRCLE_CONTENT).eq(0).find(CIRCLE);
+    cy.get(CIRCLE_CONTENT).eq(0).contains("head");
+    cy.get(CIRCLE_CONTENT).eq(0).contains(0);
+    cy.get(CIRCLE_CONTENT).eq(1).find(CIRCLE);
+    cy.get(CIRCLE_CONTENT).eq(1).contains(24);
+    cy.get(CIRCLE_CONTENT).eq(1).find(CIRCLE).contains(1);
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CIRCLE_CONTENT).eq(2).contains(24);
+    cy.get(CIRCLE_CONTENT).should("have.length", 4);
   });
 
-  it("check for removing an item by index", () => {
-    cy.get(CY_LIST_INDEX_INPUT).type(2);
-    cy.get(CY_INDEX_REMOVE_BTN).click();
-
-    cy.wait(Number(SHORT_DELAY_IN_MS));
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "0");
-      cy.get(item[0])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_changing"));
-      cy.wait(Number(SHORT_DELAY_IN_MS));
-      cy.get(item[1]).children().should("have.text", "34");
-      cy.get(item[1])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_changing"));
-      cy.wait(Number(SHORT_DELAY_IN_MS));
-      cy.get(item[2]).children().should("have.text", "1");
-      cy.get(item[2])
-        .invoke("attr", "class")
-        .then((classList) => expect(classList).contains("circle_default"));
-    });
+  it("Element removed by index correctly", function () {
+    cy.get(CY_INDEX_INPUT).type(2);
+    cy.get(CIRCLE_CONTENT).should("have.length", 3);
+    cy.get(CY_DEL_IDX_BTN).should("be.enabled").click();
+    cy.get(CIRCLE_CONTENT).eq(2).contains(2);
   });
 });

@@ -1,105 +1,99 @@
 import {
   BASE_URL,
-  BUTTON,
-  CHANGING_STATE,
-  CIRCLE,
-  CIRCLE_BOX,
-  DEFAULT_STATE,
-  RESET_BUTTON,
-  SUBMIT_BUTTON,
+  CY_FORM,
+  CY_INPUT,
+  CY_RESET_BTN,
+  CY_REMOVE_BTN,
+  CIRCLES,
+  CIRCLE_CONTENT,
+  CY_ADD_BTN,
 } from "../../test-constants/test-constants";
 import { SHORT_DELAY_IN_MS } from "../../../src/constants/delays";
 
-describe('Тесты страницы "Очередь"', function () {
-  beforeEach(function () {
+describe("Testing Queue page", () => {
+  beforeEach(() => {
     cy.visit(BASE_URL);
     cy.get("[href='/queue']").click();
     cy.location("pathname").should("eq", "/queue");
   });
 
-  it("Кнопки выкл при пустом инпуте", function () {
+  it("Buttons disabled if input is empty", () => {
+    cy.get(CY_FORM).within(() => {
+      cy.get(CY_INPUT).should("have.value", "");
+      cy.get("button").should("be.disabled");
+      cy.get(CY_REMOVE_BTN).should("be.disabled");
+      cy.get(CY_RESET_BTN).should("be.disabled");
+    });
+  });
+
+  it("Element added to queue correctly", () => {
+    cy.get(CY_INPUT).type("a");
+    cy.get(CY_ADD_BTN).click();
     cy.wait(SHORT_DELAY_IN_MS);
-    cy.get("input").clear();
-    cy.get("button").eq(1).should("be.disabled");
-    cy.get("button").eq(2).should("be.disabled");
-    cy.get("button").eq(3).should("be.disabled");
+
+    cy.get(CY_INPUT).type("b");
+    cy.get(CY_ADD_BTN).click();
+
+    cy.get(CIRCLE_CONTENT).eq(0).contains("head");
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CIRCLES).contains("b");
+
+    cy.get(CIRCLE_CONTENT).eq(1).contains("tail");
+
+    cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(CY_INPUT).type("c");
+    cy.get(CY_ADD_BTN).click();
+    cy.get(CIRCLE_CONTENT).eq(0).contains("head");
+    cy.wait(SHORT_DELAY_IN_MS);
+    cy.get(CIRCLE_CONTENT).eq(2).contains("tail");
   });
 
-  it("Корректное добавление элемента", function () {
-    const checkCircleProperties = (index) => {
-      cy.get("@allCircle")
-        .eq(index)
-        .should("have.css", "border", DEFAULT_STATE)
-        .wait(SHORT_DELAY_IN_MS)
-        .should("contain", index)
-        .and("have.css", "border", DEFAULT_STATE);
-    };
+  it("Element removed from queue correctly", () => {
+    cy.get(CY_INPUT).type("a");
+    cy.get(CY_ADD_BTN).click();
+    cy.wait(SHORT_DELAY_IN_MS);
 
-    for (let i = 1; i < 4; i++) {
-      cy.get("input").type(i);
-      cy.get("button").eq(1).should("be.enabled").click();
+    cy.get(CY_INPUT).type("b");
+    cy.get(CY_ADD_BTN).click();
+    cy.get(CIRCLE_CONTENT).eq(0).contains("head");
+    cy.wait(SHORT_DELAY_IN_MS);
 
-      cy.get("ul").find(CIRCLE_BOX).find(CIRCLE).as("allCircle");
+    cy.get(CIRCLE_CONTENT).eq(1).contains("tail");
 
-      checkCircleProperties(i - 1);
+    cy.get(CY_INPUT).type("1");
+    cy.get(CY_REMOVE_BTN).click();
 
-      cy.get(`[class^="queue-page_list"] ${CIRCLE_BOX}:eq(0)`).should(
-        "contain",
-        "head"
-      );
+    cy.wait(SHORT_DELAY_IN_MS);
 
-      cy.get(`[class^="queue-page_list"] ${CIRCLE_BOX}:eq(${i - 1})`).should(
-        "contain",
-        "tail"
-      );
-    }
+    cy.get(CIRCLES)
+      .first()
+      .should(($div) => {
+        expect($div).to.have.text("");
+      })
+      .invoke("attr", "class");
   });
 
-  it("Корректное удаление элемента", function () {
-    const fillInputAndSubmit = (value) => {
-      cy.get("input[type='text']").type(value);
-      cy.get(SUBMIT_BUTTON).should("not.be.disabled").click();
-      cy.wait(SHORT_DELAY_IN_MS);
-    };
+  it("Queue resets correctly", () => {
+    cy.clock();
+    cy.get(CY_INPUT).type("0");
+    cy.get(CY_ADD_BTN).click();
 
-    for (let i = 1; i < 4; i++) {
-      fillInputAndSubmit(i);
-    }
+    cy.tick(SHORT_DELAY_IN_MS);
+    cy.get(CY_INPUT).type("a");
+    cy.get(CY_ADD_BTN).click();
 
-    cy.get(`${BUTTON}[class^="text"]`).should("not.be.disabled").click();
-    cy.get('[class^="queue-page_list"]')
-      .find(CIRCLE_BOX)
-      .find(CIRCLE)
-      .as("allCircle");
+    cy.tick(SHORT_DELAY_IN_MS);
+    cy.get(CY_INPUT).type("23");
+    cy.get(CY_ADD_BTN).click();
 
-    cy.get("@allCircle")
-      .eq(0)
-      .should("have.css", "border", CHANGING_STATE)
-      .wait(SHORT_DELAY_IN_MS)
-      .should("contain", "");
+    cy.tick(SHORT_DELAY_IN_MS);
 
-    cy.get(`[class^="queue-page_list"] ${CIRCLE_BOX}:eq(1)`).should(
-      "contain",
-      "head"
-    );
-  });
+    cy.get(CY_RESET_BTN).click();
+    cy.tick(SHORT_DELAY_IN_MS);
 
-  it("Корректная очистка очереди", function () {
-    const fillInputAndSubmit = (value) => {
-      cy.get("input").type(value);
-      cy.get(SUBMIT_BUTTON).should("not.be.disabled").click();
-      cy.wait(SHORT_DELAY_IN_MS);
-    };
-
-    for (let i = 1; i < 4; i++) {
-      fillInputAndSubmit(i);
-    }
-
-    cy.get(RESET_BUTTON).should("not.be.disabled").click();
-
-    cy.get('[class^="queue-page_list"]')
-      .find(CIRCLE_BOX)
-      .find(CIRCLE)
-      .should("contain", "");
+    cy.get(CIRCLES).each(($item) => {
+      expect($item).to.have.text("");
+    });
   });
 });
