@@ -3,8 +3,8 @@ import {
   CY_INPUT,
   CY_REVERSE_BTN,
   CY_FORM,
-  CIRCLES,
   CIRCLE_CONTENT,
+  CIRCLE,
 } from "../../test-constants/test-constants";
 
 import { SHORT_DELAY_IN_MS } from "../../../src/constants/delays";
@@ -27,14 +27,12 @@ describe("Testing String Reverse page", function () {
       cy.get(CY_REVERSE_BTN).click();
     });
 
-    cy.get(CIRCLES).then((item) => {
-      cy.get(item[0]).children().should("have.text", "t");
-      cy.get(item[1]).children().should("have.text", "e");
-      cy.get(item[2]).children().should("have.text", "s");
-      cy.get(item[3]).children().should("have.text", "t");
-    });
-
     cy.wait(SHORT_DELAY_IN_MS);
+
+    cy.get(CIRCLE_CONTENT).find(CIRCLE).eq(0).contains("t");
+    cy.get(CIRCLE_CONTENT).find(CIRCLE).eq(1).contains("s");
+    cy.get(CIRCLE_CONTENT).find(CIRCLE).eq(2).contains("e");
+    cy.get(CIRCLE_CONTENT).find(CIRCLE).eq(3).contains("t");
 
     cy.get(CIRCLE_CONTENT).should("have.length", 4);
   });
