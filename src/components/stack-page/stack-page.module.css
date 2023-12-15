@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  width: 829px;
+  margin: 0 auto;
+  gap: 12px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.circles {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 70px;
+}
+
+.circle {
+  list-style-type: none;
+  padding-left: 10px;
+}
